@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class ArticleConfig(AppConfig):
+class PollsConfig(AppConfig):
     name = 'article'
