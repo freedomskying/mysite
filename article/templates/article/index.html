@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Article Index</title>
 </head>
 <body>
 
-</body>
-</html>
+{% if latest_question_list %}
+    <ul>
+        {% for article in latest_question_list %}
+
+            <li><a href="">{{ article.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+
+< /body>
+< /html>
