@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'article.apps.ArticleConfig',
     'restapp.apps.RestappConfig',
+    'scott.apps.ScottConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -86,7 +87,24 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
+    'local12c': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'ORCL',
+        'USER': 'scott',
+        'PASSWORD': 'tiger',
+        'HOST': '192.168.1.101',
+        'PORT': '1521',
+    },
+}
+
+# use multi-database in django
+# add by WeizhongTu
+DATABASE_ROUTERS = ['mysite.database_router.DatabaseAppsRouter']
+DATABASE_APPS_MAPPING = {
+    # example:
+    # 'app_name':'database_name',
+    'scott': 'local12c',
 }
 
 # Password validation
