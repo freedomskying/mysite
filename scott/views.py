@@ -4,9 +4,9 @@ from .models import Dept
 
 # Create your views here.
 class IndexView(generic.ListView):
-    template_name = 'scott/index.html'
+    template_name = 'watchlist/index.html'
     context_object_name = 'latest_dept_list'
 
-    def get_deptset(self):
+    def get_queryset(self):
         """Return the last five published questions."""
-        return Dept.objects.using('local12c').all()
+        return Dept.objects.all()
