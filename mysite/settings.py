@@ -94,17 +94,29 @@ DATABASES = {
         'NAME': 'wkxtedw',
         'USER': 'scott',
         'PASSWORD': 'tiger',
-        'HOST': '192.168.1.101',
-        'PORT': '1521',
-    },
-    'wkxtedw_prd': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'wkxtedw',
-        'USER': 'dwsrc',
-        'PASSWORD': '1',
         'HOST': '10.10.22.39',
         'PORT': '1521',
     },
+    'watchlist': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': '10.100.2.35:1521/ORCLPDB',
+        'USER': 'wluser',
+        'PASSWORD': 'wluser',
+    },
+    'scottdb': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': '10.100.2.35:1521/ORCLPDB',
+        'USER': 'scott',
+        'PASSWORD': 'tiger',
+    },
+    # 'wkxtedw_prd': {
+    #     'ENGINE': 'django.db.backends.oracle',
+    #     'NAME': 'ORCLPDB',
+    #     'USER': 'wluser',
+    #     'PASSWORD': 'wluser',
+    #     'HOST': '10.100.2.35',
+    #     'PORT': '1521',
+    # },
 }
 
 # use multi-database in django
@@ -113,8 +125,8 @@ DATABASE_ROUTERS = ['mysite.database_router.DatabaseAppsRouter']
 DATABASE_APPS_MAPPING = {
     # example:
     # 'app_name':'database_name',
-    'scott': 'local12c',
-    'watchlist': 'wkxtedw_prd',
+    'scott': 'scottdb',
+    'watchlist': 'watchlist',
 }
 
 # Password validation
