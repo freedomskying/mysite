@@ -21,8 +21,8 @@ from rest_framework import routers
 from restapp import views
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
+# router.register(r'users', views.UserViewSet)
+# router.register(r'groups', views.GroupViewSet)
 
 urlpatterns = [
     path('polls/', include('polls.urls')),
@@ -30,7 +30,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('restapp', include('restapp.urls')),
-    path('scott', include('scott.urls')),
-    path('watchlist', include('watchlist.urls')),
+    path('restapp/', include('restapp.urls')),
+    # url(r'^', include('restapp.urls')),
+    path('scott/', include('scott.urls')),
+    path('watchlist/', include('watchlist.urls')),
+    path('dmreport/', include('dmreport.urls')),
+    path('accounts/', include('allauth.urls')),  # allauth
 ]

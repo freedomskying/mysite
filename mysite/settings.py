@@ -35,14 +35,22 @@ INSTALLED_APPS = [
     'restapp.apps.RestappConfig',
     'scott.apps.ScottConfig',
     'watchlist.apps.WatchlistConfig',
+    'dmreport.apps.DmreportConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
     'rest_framework',
 ]
+
+SITE_ID = 1
 
 # add bootstrap_admin setting
 # from django.conf import global_settings
@@ -88,15 +96,19 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.oracle',
+        # 'NAME': '10.100.2.35:1521/ORCLPDB',
+        # 'USER': 'django',
+        # 'PASSWORD': 'django',
     },
-    'local12c': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'wkxtedw',
-        'USER': 'scott',
-        'PASSWORD': 'tiger',
-        'HOST': '10.10.22.39',
-        'PORT': '1521',
-    },
+    # 'local12c': {
+    #     'ENGINE': 'django.db.backends.oracle',
+    #     'NAME': 'wkxtedw',
+    #     'USER': 'scott',
+    #     'PASSWORD': 'tiger',
+    #     'HOST': '10.10.22.39',
+    #     'PORT': '1521',
+    # },
     'watchlist': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': '10.100.2.35:1521/ORCLPDB',
@@ -164,3 +176,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Email POP3/SMTP 配置 - QQ邮箱
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25  # 或者 995是设置了 SSL 加密方式
+EMAIL_HOST_USER = '501254772@qq.com'  # 发送邮件的邮箱
+EMAIL_HOST_PASSWORD = 'poxdyoqdtqzxbhae'  # 在邮箱中设置的客户端授权密码，如果重新设置了新的授权码,直接使用最新的授权码即可
+EMAIL_USE_TLS = True  # 这里必须是 True，否则发送不成功
+EMAIL_FROM = '501254772@qq.com'  # 收件人看到的发件人
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # EMAIL_HOST_USER 默认值为webmaster@localhost 需要修改，否则报501错误

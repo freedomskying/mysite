@@ -1,10 +1,10 @@
 from django.db import models
-from django.http import JsonResponse, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 from pygments.lexers import get_all_lexers  # 一个实现代码高亮的模块
 from pygments.styles import get_all_styles
-from rest_framework.parsers import JSONParser
 
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters.html import HtmlFormatter
+from pygments import highlight
 
 LEXERS = [item for item in get_all_lexers() if item[1]]
 LANGUAGE_CHOICES = sorted([(item[1][0], item[0]) for item in LEXERS])  # 得到所有编程语言的选项
@@ -18,8 +18,21 @@ class Snippet(models.Model):
     linenos = models.BooleanField(default=False)
     language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100)
     style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)
+    owner = models.ForeignKey('auth.User', related_name='restapp', on_delete=models.CASCADE)
+    highlighted = models.TextField()
 
     class Meta:
         ordering = ('created',)
 
-
+    def save(self, *args, **kwargs):
+        """
+        Use the `pygments` library to create a highlighted HTML
+        representation of the code snippet.
+        """
+        lexer = get_lexer_by_name(self.language)
+        linenos = 'table' if self.linenos else False
+        options = {'title': self.title} if self.title else {}
+        formatter = HtmlFormatter(style=self.style, linenos=linenos,
+                                  full=True, **options)
+        self.highlighted = highlight(self.code, lexer, formatter)
+        super(Snippet, self).save(*args, **kwargs)

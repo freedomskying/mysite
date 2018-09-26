@@ -286,3 +286,15 @@ class DwDowjEntityNameDtl(models.Model):
     class Meta:
         managed = False
         db_table = 'DW_DOWJ_ENTITY_NAME_DTL'
+
+
+class DwDowjRecordIndex(models.Model):
+    record_name = models.CharField(max_length=500, blank=True, null=True)
+    id_value = models.CharField(max_length=255, blank=True, null=True)
+    id_type = models.CharField(max_length=255, blank=True, null=True)
+    record_id = models.CharField(max_length=20, blank=True, null=True)
+    id = models.FloatField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'DW_DOWJ_RECORD_INDEX'

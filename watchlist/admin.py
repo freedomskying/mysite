@@ -22,4 +22,4 @@ admin.site.register(DwDowjEntityProfileDtl)
 admin.site.register(DwDowjEntitySourceDtl)
 admin.site.register(DwDowjPersonDtl)
 admin.site.register(DwDowjEntityNameDtl)
-
+admin.site.register(DwDowjRecordIndex)

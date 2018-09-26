@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Polls_Index</title>
 </head>
 <body>
+{% load static %}
 
+{% if record_list %}
+    <ul>
+        {% for record in record_list %}
+
+            <li>{{ record.id }} , {{ record.id_value }}, {{ record.record_name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
 </body>
 </html>
