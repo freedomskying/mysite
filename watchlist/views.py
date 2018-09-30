@@ -1,10 +1,9 @@
 from django.http import JsonResponse
 from django.views import generic
 from rest_framework import status
-from rest_framework.decorators import api_view
 
 from .models import DwDowjRecordIndex
-from .serializers import WatchlistSerializer, IdentifyResultSerializer
+from .serializers import IdentifyResultSerializer
 
 from rest_framework.views import APIView
 from rest_framework.response import Response

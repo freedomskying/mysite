@@ -47,7 +47,11 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.baidu',
     'rest_framework',
+    'myaccounts',
+    'myrestaurants',
+    'smartdoc',
 ]
 
 SITE_ID = 1
@@ -176,6 +180,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
+
+# specify media root for user uploaded files,
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Email POP3/SMTP 配置 - QQ邮箱
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -186,3 +195,6 @@ EMAIL_HOST_PASSWORD = 'poxdyoqdtqzxbhae'  # 在邮箱中设置的客户端授权
 EMAIL_USE_TLS = True  # 这里必须是 True，否则发送不成功
 EMAIL_FROM = '501254772@qq.com'  # 收件人看到的发件人
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # EMAIL_HOST_USER 默认值为webmaster@localhost 需要修改，否则报501错误
+
+# allauth configuration
+ACCOUNT_SIGNUP_FORM_CLASS = 'myaccounts.forms.SignupForm'

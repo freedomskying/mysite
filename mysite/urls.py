@@ -13,7 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
@@ -25,15 +27,20 @@ router = routers.DefaultRouter()
 # router.register(r'groups', views.GroupViewSet)
 
 urlpatterns = [
-    path('polls/', include('polls.urls')),
-    path('article/', include('article.urls')),
-    path('admin/', admin.site.urls),
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('restapp/', include('restapp.urls')),
-    # url(r'^', include('restapp.urls')),
-    path('scott/', include('scott.urls')),
-    path('watchlist/', include('watchlist.urls')),
-    path('dmreport/', include('dmreport.urls')),
-    path('accounts/', include('allauth.urls')),  # allauth
-]
+                  path('polls/', include('polls.urls')),
+                  path('article/', include('article.urls')),
+                  path('admin/', admin.site.urls),
+                  url(r'^', include(router.urls)),
+                  url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+                  path('restapp/', include('restapp.urls')),
+                  # url(r'^', include('restapp.urls')),
+                  path('scott/', include('scott.urls')),
+                  path('watchlist/', include('watchlist.urls')),
+                  path('dmreport/', include('dmreport.urls')),
+                  path('accounts/', include('allauth.urls')),  # allauth
+                  path('accounts/', include('myaccounts.urls')),  # myaccounts, django-allauth
+                  url(r'^myrestaurants/', include('myrestaurants.urls')),  # myrestaurants
+                  path('smartdoc/', include('smartdoc.urls')),  # smartdoc
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+LOGIN_REDIRECT_URL = '/accounts/profile/'
