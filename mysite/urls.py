@@ -33,10 +33,8 @@ urlpatterns = [
                   url(r'^', include(router.urls)),
                   url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
                   path('restapp/', include('restapp.urls')),
-                  # url(r'^', include('restapp.urls')),
                   path('scott/', include('scott.urls')),
                   path('watchlist/', include('watchlist.urls')),
-                  path('dmreport/', include('dmreport.urls')),
                   path('accounts/', include('allauth.urls')),  # allauth
                   path('accounts/', include('myaccounts.urls')),  # myaccounts, django-allauth
                   url(r'^myrestaurants/', include('myrestaurants.urls')),  # myrestaurants

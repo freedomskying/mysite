@@ -1,8 +1,9 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from rest_framework import status
 
-from .models import DwDowjRecordIndex
+from .models import *
 from .serializers import IdentifyResultSerializer
 
 from rest_framework.views import APIView
@@ -16,6 +17,30 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         return DwDowjRecordIndex.objects.all()[0:200]
+
+
+def record_result(request):
+    record_name = request.POST['record_name']
+
+    record_list = DwDowjRecordIndex.objects.filter(record_name=record_name)
+    return render(request, 'watchlist/record_result.html', {
+        'record_list': record_list,
+        'error_message': "You didn't select a record.",
+    })
+
+
+def record_query(request):
+    return render(request, 'watchlist/record_query.html', {
+    })
+
+
+def record_detail(request, record_id):
+    country_detail = DwDowjPersonCntryDtl.objects.filter(person_id=record_id)
+    description_detail = DwDowjPersonDescDtl.objects.filter(person_id=record_id)
+    return render(request, 'watchlist/record_detail.html', {
+        'country_detail': country_detail,
+        'description_detail': description_detail,
+    })
 
 
 class DowjIdentifyView(APIView):

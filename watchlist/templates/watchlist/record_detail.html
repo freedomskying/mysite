@@ -1,0 +1,30 @@
+{% extends "smartdoc/base.html" %}
+
+{% block content %}
+    {% csrf_token %}
+    {% if country_detail %}
+        <ul>
+            {% for country in country_detail %}
+
+                <li>{{ country.country_type }}</li>
+                <li>{{ country.country_code }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No records are available.</p>
+    {% endif %}
+
+    {% if description_detail %}
+        <ul>
+            {% for description in description_detail %}
+
+                <li>{{ description.description1 }}</li>
+                <li>{{ description.description2 }}</li>
+                <li>{{ description.description3 }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No records are available.</p>
+    {% endif %}
+
+{% endblock %}

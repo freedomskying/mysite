@@ -1,0 +1,14 @@
+{% extends "smartdoc/base.html" %}
+
+{% block content %}
+
+    <form action="/watchlist/record_result/" role="record_result" method="post">
+        {% csrf_token %}
+        <input type="text" name="record_name" id="record_name" class="form-control" placeholder="姓名">
+
+        <button class="btn btn-default" type="submit" value="submit">
+        </button>
+
+    </form>
+
+{% endblock %}

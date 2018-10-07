@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
+# django suit menu setting
+from . import admin_settings
 
 import os
 
@@ -30,12 +32,12 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     #    'bootstrap_admin',
+    'suit',
     'polls.apps.PollsConfig',
     'article.apps.ArticleConfig',
     'restapp.apps.RestappConfig',
     'scott.apps.ScottConfig',
     'watchlist.apps.WatchlistConfig',
-    'dmreport.apps.DmreportConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
     'myaccounts',
     'myrestaurants',
     'smartdoc',
+    'widget_tweaks',
 ]
 
 SITE_ID = 1
@@ -198,3 +201,18 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # EMAIL_HOST_USER 默认值为webmaster@lo
 
 # allauth configuration
 ACCOUNT_SIGNUP_FORM_CLASS = 'myaccounts.forms.SignupForm'
+
+# django-suit configuration start
+
+# suit在admin里设置时间的一个小bug。需要把时间格式指定一下
+DATETIME_FORMAT = 'Y-m-d H:i:s'
+DATE_FORMAT = 'Y-m-d'
+
+# 语言设置成中文
+LANGUAGE_CODE = 'zh-Hans'
+TIME_ZONE = 'Asia/Shanghai'
+USE_I18N = True
+USE_L10N = False
+USE_TZ = True
+
+# django-suit configuration end

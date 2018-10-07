@@ -2,43 +2,86 @@
 
 {% block content %}
     <h3>
-        {{ document.title }}
+        {{ product.name }} - {{ product.code }} - 所有文档
     </h3>
 
+    {% if product.documents.all %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>标题</th>
+                <th>类别</th>
+                <th>格式</th>
+                <th>大小</th>
+                <th>版本</th>
+                <th>修改日期</th>
+                <th>详情</th>
+                <th>下载</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for document in product.documents.all %}
+                <tr>
+                <td>
+                    {{ document.title }}
+                </td>
+                <td>
+                    {{ document.category.name }}
+                </td>
+                <td>
+                    {{ document.get_format }}
+                </td>
+                <td>
+                    {{ document.doc_file.size | filesizeformat }}
+                </td>
+                <td>
+                    {{ document.version_no }}
+                </td>
+                <td>
+                    {{ document.mod_date | date:"Y-m-d" }}
+                </td>
+                <td>
+                    <a href="{% url 'smartdoc:document_detail' document.product.id document.id %}"><span
+                            class="glyphicon glyphicon-eye-open"></span></a>
+                </td>
+                <td>
+                    <a href="{{ document.doc_file.url }}"><span class="glyphicon glyphicon-download"></span></a>
+                </td>
+            {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>对不起，没有文档。</p>
+    {% endif %}
 
-    <ul>
-        <li>产品名称: {{ document.product.name }}</li>
-        <li>产品代码: {{ document.product.code }}</li>
-        <li>文档类别: {{ document.category.name }}</li>
-        <li>
-            格式大小: {{ document.get_format }}
-            |
-            {{ document.doc_file.size | filesizeformat }}
-        </li>
-        <li> 版本号: {{ document.version_no }}</li>
-        <li> 上传日期: {{ document.create_date | date:"Y-m-d" }}</li>
-        <li> 修改日期: {{ document.mod_date | date:"Y-m-d" }}</li>
-        <li>作者: {{ document.author.username }}</li>
 
-    </ul>
+    {% if request.user.is_authenticated %}
 
-    <p><span class="glyphicon glyphicon-download"></span> <a href="{{ document.doc_file.url }}">下载文档</a>
-
-        {% if request.user.is_authenticated %}
-            {% if request.user == document.author %}
-                | <span class="glyphicon glyphicon-wrench"></span>
-                <a href="{% url 'smartdoc:document_update' document.product.id document.id %}">编辑文档</a>
+        <p>
+            {% if perms.smartdoc.add_document %}
+                <span class="glyphicon glyphicon-plus"></span>
+                <a href="{% url 'smartdoc:document_create' product.id %}">上传文档</a> |
             {% endif %}
-        {% else %}
-            <p>
-                请先<a
-                    href="{% url 'account_login' %}?next={% url 'smartdoc:document_detail' document.product.id document.id %}">登录</a>再上传或编辑文档。
-            </p>
-        {% endif %}
+
+            {% if perms.smartdoc.add_product %}
+                <span class="glyphicon glyphicon-plus"></span> <a href="{% url 'smartdoc:product_create' %}">添加产品</a>
+            {% endif %}
+
+            {% if request.user == product.author %}
+                | <span class="glyphicon glyphicon-wrench"></span>
+                <a href="{% url 'smartdoc:product_update' product.id %}">编辑产品</a>
+            {% endif %}
+
+        </p>
+    {% else %}
+        <p>请先<a href="{% url 'account_login' %}?next={% url 'smartdoc:product_detail' product.id %}">登录</a>添加产品，编辑产品或上传文档。
+        </p>
+    {% endif %}
 
     <p><a href="{% url 'smartdoc:product_list' %}">查看全部产品</a> | <a href="{% url 'smartdoc:category_list' %}">查看全部类别</a>
         | <a href="{% url 'smartdoc:document_list' %}">查看全部文档</a>
     </p>
 
-
 {% endblock %}
+

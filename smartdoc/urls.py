@@ -22,7 +22,9 @@ urlpatterns = [
     path('category/', views.CategoryList.as_view(), name='category_list'),
 
     # 展示类别详情
-    re_path(r'^category/(?P<pk>\d+)/$', views.CategoryDetail.as_view(), name='category_detail'),  # 创建类别
+    re_path(r'^category/(?P<pk>\d+)/$', views.CategoryDetail.as_view(), name='category_detail'),
+
+    # 创建类别
     re_path(r'^category/create/$', views.CategoryCreate.as_view(), name='category_create'),
 
     # 修改类别
@@ -43,5 +45,8 @@ urlpatterns = [
 
     # 文档搜索
     path('document/search/', views.document_search, name='document_search'),
+
+    # Ajax搜索
+    path('ajax/search/', views.doc_ajax_search, name='doc_ajax_search'),
 
 ]
