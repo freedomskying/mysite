@@ -6,7 +6,6 @@ from . import views
 app_name = 'watchlist'
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
     path('service/', views.DowjIdentifyView.as_view(), name='service'),
     path('record_query/', views.record_query, name='record_query'),
     path('record_result/', views.record_result, name='record_result'),

@@ -20,8 +20,6 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from restapp import views
-
 router = routers.DefaultRouter()
 # router.register(r'users', views.UserViewSet)
 # router.register(r'groups', views.GroupViewSet)
@@ -36,9 +34,9 @@ urlpatterns = [
                   path('scott/', include('scott.urls')),
                   path('watchlist/', include('watchlist.urls')),
                   path('accounts/', include('allauth.urls')),  # allauth
-                  path('accounts/', include('myaccounts.urls')),  # myaccounts, django-allauth
                   url(r'^myrestaurants/', include('myrestaurants.urls')),  # myrestaurants
                   path('smartdoc/', include('smartdoc.urls')),  # smartdoc
+                  path('portal/', include('portal.urls')),  # portal
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 LOGIN_REDIRECT_URL = '/accounts/profile/'

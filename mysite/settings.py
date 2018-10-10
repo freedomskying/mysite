@@ -51,10 +51,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.baidu',
     'rest_framework',
-    'myaccounts',
     'myrestaurants',
     'smartdoc',
     'widget_tweaks',
+    'portal',
 ]
 
 SITE_ID = 1
@@ -200,7 +200,7 @@ EMAIL_FROM = '501254772@qq.com'  # 收件人看到的发件人
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # EMAIL_HOST_USER 默认值为webmaster@localhost 需要修改，否则报501错误
 
 # allauth configuration
-ACCOUNT_SIGNUP_FORM_CLASS = 'myaccounts.forms.SignupForm'
+# ACCOUNT_SIGNUP_FORM_CLASS = 'myaccounts.forms.SignupForm'
 
 # django-suit configuration start
 
@@ -216,3 +216,8 @@ USE_L10N = False
 USE_TZ = True
 
 # django-suit configuration end
+
+# LOGIN_URL配置
+LOGIN_URL = '/portal/login/'
+
+# LOGIN_URL配置 END

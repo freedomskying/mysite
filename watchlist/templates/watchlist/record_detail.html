@@ -1,30 +1,434 @@
-{% extends "smartdoc/base.html" %}
+{% extends "portal/menu.html" %}
 
 {% block content %}
-    {% csrf_token %}
-    {% if country_detail %}
-        <ul>
-            {% for country in country_detail %}
 
-                <li>{{ country.country_type }}</li>
-                <li>{{ country.country_code }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No records are available.</p>
-    {% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">黑名单个人信息查询明细</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
 
-    {% if description_detail %}
-        <ul>
-            {% for description in description_detail %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    客户基本信息 Base Information
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        {% if base_detail %}
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>变更日期</th>
+                                    <th>性别</th>
+                                    <th>状态</th>
+                                    <th>是否死亡</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for base in base_detail %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ base.action_date }}</td>
+                                        <td>{{ base.gender }}</td>
+                                        <td>{{ base.active_status }}</td>
+                                        <td>{{ base.deceased }}</td>
+                                    </tr>
+                                {% endfor %}
 
-                <li>{{ description.description1 }}</li>
-                <li>{{ description.description2 }}</li>
-                <li>{{ description.description3 }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No records are available.</p>
-    {% endif %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No records are available.</p>
+                        {% endif %}
+                    </div>
+                    <!-- /.table-responsive -->
+
+                </div>
+                <!-- /.panel-body -->
+
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    国家信息 Country
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        {% if country_detail %}
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>国家类型</th>
+                                    <th>国家代码</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for country in country_detail %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ country.country_type }}</td>
+                                        <td>{{ country.country_code }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No records are available.</p>
+                        {% endif %}
+                    </div>
+                    <!-- /.table-responsive -->
+
+                </div>
+                <!-- /.panel-body -->
+
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    客户描述信息 Description Information
+                </div>
+                <!-- /.panel-heading -->
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        {% if description_detail %}
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>客户类型1</th>
+                                    <th>客户类型2</th>
+                                    <th>客户类型3</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for description in description_detail %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ description.description1 }}</td>
+                                        <td>{{ description.description2 }}</td>
+                                        <td>{{ description.description3 }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No records are available.</p>
+                        {% endif %}
+                    </div>
+                    <!-- /.table-responsive -->
+
+                </div>
+                <!-- /.panel-body description-->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    日期信息 Date Information
+                </div>
+                <!-- /.panel-heading -->
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        {% if date_detail %}
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>日期类型</th>
+                                    <th>日</th>
+                                    <th>月份</th>
+                                    <th>年份</th>
+                                    <th>日期描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for date in date_detail %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ date.date_type }}</td>
+                                        <td>{{ date.day }}</td>
+                                        <td>{{ date.month }}</td>
+                                        <td>{{ date.year }}</td>
+                                        <td>{{ date.dnotes }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No records are available.</p>
+                        {% endif %}
+                    </div>
+                    <!-- /.table-responsive -->
+
+                </div>
+                <!-- /.panel-body description-->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    证件信息 Document Information
+                </div>
+                <!-- /.panel-heading -->
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        {% if document_detail %}
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>证件类型</th>
+                                    <th>证件号码</th>
+                                    <th>证件描述</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for document in document_detail %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ document.id_type }}</td>
+                                        <td>{{ document.id_value }}</td>
+                                        <td>{{ document.id_notes }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No records are available.</p>
+                        {% endif %}
+                    </div>
+                    <!-- /.table-responsive -->
+
+                </div>
+                <!-- /.panel-body description-->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    姓名信息 Name Information
+                </div>
+                <!-- /.panel-heading -->
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        {% if name_detail %}
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>头衔</th>
+                                    <th>姓名</th>
+                                    <th>姓名_组合</th>
+                                    <th>姓</th>
+                                    <th>名</th>
+                                    <th>中间名</th>
+                                    <th>女方姓名</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for name in name_detail %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ name.title_honorific }}</td>
+                                        <td>{{ name.original_script_name }}</td>
+                                        <td>{{ name.single_string_name }}</td>
+                                        <td>{{ name.sur_name }}</td>
+                                        <td>{{ name.first_name }}</td>
+                                        <td>{{ name.middle_name }}</td>
+                                        <td>{{ name.maiden_name }}</td>
+                                        <td>{{ name.suffix }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No records are available.</p>
+                        {% endif %}
+                    </div>
+                    <!-- /.table-responsive -->
+
+                </div>
+                <!-- /.panel-body description-->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    出生地信息 Birth Place Information
+                </div>
+                <!-- /.panel-heading -->
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        {% if place_detail %}
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>出生地</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for place in place_detail %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ place.birth_place }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No records are available.</p>
+                        {% endif %}
+                    </div>
+                    <!-- /.table-responsive -->
+
+                </div>
+                <!-- /.panel-body description-->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    备注信息 Profile Information
+                </div>
+                <!-- /.panel-heading -->
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        {% if profile_detail %}
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for profile in profile_detail %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ profile.profile_notes }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No records are available.</p>
+                        {% endif %}
+                    </div>
+                    <!-- /.table-responsive -->
+
+                </div>
+                <!-- /.panel-body description-->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    角色信息 Role Information
+                </div>
+                <!-- /.panel-heading -->
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        {% if role_detail %}
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>角色类型</th>
+                                    <th>类别</th>
+                                    <th>生效日期</th>
+                                    <th>失效日期</th>
+                                    <th>头衔</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for role in role_detail %}
+                                    <tr>
+
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ role.roletype }}</td>
+                                        <td>{{ role.occ_cat }}</td>
+                                        <td>{{ role.since_year }}-{{ profile.since_month }}-{{ profile.since_day }}</td>
+                                        <td>{{ role.to_year }}-{{ profile.to_month }}-{{ profile.to_day }}</td>
+                                        <td>{{ role.occ_title }}</td>
+
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No records are available.</p>
+                        {% endif %}
+                    </div>
+                    <!-- /.table-responsive -->
+
+                </div>
+                <!-- /.panel-body description-->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
 
 {% endblock %}

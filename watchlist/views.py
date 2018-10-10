@@ -1,5 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.utils.decorators import method_decorator
 from django.views import generic
 from rest_framework import status
 
@@ -11,35 +13,46 @@ from rest_framework.response import Response
 
 
 # Create your views here.
-class IndexView(generic.ListView):
-    template_name = 'watchlist/index.html'
-    context_object_name = 'record_list'
 
-    def get_queryset(self):
-        return DwDowjRecordIndex.objects.all()[0:200]
-
-
+@login_required
 def record_result(request):
     record_name = request.POST['record_name']
 
     record_list = DwDowjRecordIndex.objects.filter(record_name=record_name)
-    return render(request, 'watchlist/record_result.html', {
+    return render(request, 'watchlist/record_query.html', {
         'record_list': record_list,
         'error_message': "You didn't select a record.",
     })
 
 
+@login_required
 def record_query(request):
     return render(request, 'watchlist/record_query.html', {
     })
 
 
+@login_required
 def record_detail(request, record_id):
     country_detail = DwDowjPersonCntryDtl.objects.filter(person_id=record_id)
     description_detail = DwDowjPersonDescDtl.objects.filter(person_id=record_id)
+    date_detail = DwDowjPersonDateDtl.objects.filter(person_id=record_id)
+    document_detail = DwDowjPersonDocumentDtl.objects.filter(person_id=record_id)
+    name_detail = DwDowjPersonNameDtl.objects.filter(person_id=record_id)
+    place_detail = DwDowjPersonPlaceDtl.objects.filter(person_id=record_id)
+    profile_detail = DwDowjPersonProfileDtl.objects.filter(person_id=record_id)
+    role_detail = DwDowjPersonRoleDtl.objects.filter(person_id=record_id)
+    base_detail = DwDowjPersonDtl.objects.filter(person_id=record_id)
+
     return render(request, 'watchlist/record_detail.html', {
         'country_detail': country_detail,
         'description_detail': description_detail,
+        'date_detail': date_detail,
+        'document_detail': document_detail,
+        'name_detail': name_detail,
+        'place_detail': place_detail,
+        'profile_detail': profile_detail,
+        'role_detail': role_detail,
+        'base_detail': base_detail,
     })
 
 
