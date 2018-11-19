@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 # django suit menu setting
 from . import admin_settings
+import logging
+import django.utils.log
+import logging.handlers
 
 import os
 
@@ -36,7 +39,6 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'article.apps.ArticleConfig',
     'restapp.apps.RestappConfig',
-    'scott.apps.ScottConfig',
     'watchlist.apps.WatchlistConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +57,7 @@ INSTALLED_APPS = [
     'smartdoc',
     'widget_tweaks',
     'portal',
+    # 'silk',
 ]
 
 SITE_ID = 1
@@ -72,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'silk.middleware.SilkyMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -121,6 +125,7 @@ DATABASES = {
         'NAME': '10.100.2.35:1521/ORCLPDB',
         'USER': 'wluser',
         'PASSWORD': 'wluser',
+        'CONN_MAX_AGE': 60,
     },
     'scottdb': {
         'ENGINE': 'django.db.backends.oracle',
@@ -144,7 +149,6 @@ DATABASE_ROUTERS = ['mysite.database_router.DatabaseAppsRouter']
 DATABASE_APPS_MAPPING = {
     # example:
     # 'app_name':'database_name',
-    'scott': 'scottdb',
     'watchlist': 'watchlist',
 }
 
@@ -221,3 +225,109 @@ USE_TZ = True
 LOGIN_URL = '/portal/login/'
 
 # LOGIN_URL配置 END
+
+# LOGGING CONFIGURATION
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d] [%(module)s:%(funcName)s] [%(levelname)s]- %(message)s'}
+        # 日志格式
+    },
+    'filters': {
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        },
+        'default': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'D:\\tmp\\log\\all.log',  # 日志输出文件
+            'maxBytes': 1024 * 1024 * 5,  # 文件大小
+            'backupCount': 5,  # 备份份数
+            'formatter': 'standard',  # 使用哪种formatters日志格式
+        },
+        'error': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'D:\\tmp\\log\\error.log',
+            'maxBytes': 1024 * 1024 * 5,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        'request_handler': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'D:\\tmp\\log\\script.log',
+            'maxBytes': 1024 * 1024 * 5,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'scprits_handler': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'D:\\tmp\\log\\script.log',
+            'maxBytes': 1024 * 1024 * 5,
+            'backupCount': 5,
+            'formatter': 'standard',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['default', 'console'],
+            'level': 'INFO',
+            'propagate': False
+        },
+        'django.request': {
+            'handlers': ['request_handler'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'scripts': {
+            'handlers': ['scprits_handler'],
+            'level': 'INFO',
+            'propagate': False
+        },
+        'watchlist.views': {
+            'handlers': ['default', 'error'],
+            'level': 'INFO',
+            'propagate': True
+        },
+        'portal.views': {
+            'handlers': ['error'],
+            'level': 'ERROR',
+            'propagate': True
+        }
+    }
+}
+# Logging Configuration End
+
+# REST_FRAMEWORK Configuration Start
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     )
+# }
+# REST_FRAMEWORK Configuration End
+
+# django silk configuration Start
+# STATIC_ROOT = os.path.join(BASE_DIR, 'silk')
+
+# 使用Python的内置cProfile分析器
+SILKY_PYTHON_PROFILER = True
+# 生成.prof文件，silk产生的程序跟踪记录，详细记录来执行来哪个文件，哪一行，用了多少时间等信息
+SILKY_PYTHON_PROFILER_BINARY = True
+# .prof文件保存路径（最好不要像我这样设置在项目目录中）
+# 如果没有本设置，prof文件将默认保存在MEDIA_ROOT里
+SILKY_PYTHON_PROFILER_RESULT_PATH = os.path.join(BASE_DIR, 'logs')
+
+# django silk configuration end

@@ -31,12 +31,12 @@ urlpatterns = [
                   url(r'^', include(router.urls)),
                   url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
                   path('restapp/', include('restapp.urls')),
-                  path('scott/', include('scott.urls')),
                   path('watchlist/', include('watchlist.urls')),
                   path('accounts/', include('allauth.urls')),  # allauth
                   url(r'^myrestaurants/', include('myrestaurants.urls')),  # myrestaurants
                   path('smartdoc/', include('smartdoc.urls')),  # smartdoc
                   path('portal/', include('portal.urls')),  # portal
+                  # url(r'^silk/', include('silk.urls', namespace='silk')),  # silk
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 LOGIN_REDIRECT_URL = '/accounts/profile/'
